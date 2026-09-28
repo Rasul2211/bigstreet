@@ -1,0 +1,38 @@
+.stepper {
+  display: inline-grid;
+  grid-template-columns: 48px 44px 48px;
+  align-items: center;
+  height: 48px;
+  border: 1px solid var(--line-strong);
+  font-size: 13px;
+}
+
+.stepper[data-small="true"] {
+  grid-template-columns: 40px 34px 40px;
+  height: 40px;
+}
+
+.stepper span {
+  text-align: center;
+}
+
+.stepper button {
+  height: 100%;
+  font-size: 16px;
+  transition: color 0.25s, background-color 0.25s;
+}
+
+.stepper button:active {
+  background: var(--panel);
+}
+
+.stepper button:disabled {
+  color: var(--line-strong);
+  cursor: default;
+}
+
+@media (hover: hover) {
+  .stepper button:not(:disabled):hover {
+    color: var(--orange);
+  }
+}

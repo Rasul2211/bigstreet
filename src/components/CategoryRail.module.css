@@ -1,0 +1,96 @@
+.rail {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  overflow-x: auto;
+  scrollbar-width: none;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+}
+
+.rail::-webkit-scrollbar {
+  display: none;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0 var(--gutter);
+  display: flex;
+  gap: 26px;
+  width: max-content;
+}
+
+.list li {
+  scroll-snap-align: start;
+  scroll-margin-left: var(--gutter);
+}
+
+.item {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 16px 0 14px;
+  color: var(--line-strong);
+  transition: color 0.4s var(--ease);
+}
+
+.item .display {
+  font-size: 34px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.item sup {
+  font-size: 9px;
+  color: var(--muted);
+}
+
+.item::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: var(--orange);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s var(--ease);
+}
+
+.item[aria-current="page"] {
+  color: var(--white);
+}
+
+.item[aria-current="page"]::after {
+  transform: scaleX(1);
+}
+
+.item[aria-current="page"] sup {
+  color: var(--orange);
+}
+
+.item:active {
+  color: var(--white);
+}
+
+@media (hover: hover) {
+  .item:hover {
+    color: var(--white);
+  }
+}
+
+@media (min-width: 900px) {
+  .list {
+    gap: 44px;
+  }
+
+  .item .display {
+    font-size: 56px;
+  }
+
+  .item {
+    padding: 22px 0 18px;
+  }
+}

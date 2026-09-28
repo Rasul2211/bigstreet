@@ -1,0 +1,173 @@
+/* ---------- Телефон ---------- */
+
+.hero {
+  position: relative;
+  padding: calc(var(--header-h) + 12px) var(--gutter) 40px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    "meta"
+    "word"
+    "visual"
+    "copy";
+  row-gap: 14px;
+}
+
+.meta {
+  grid-area: meta;
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+}
+
+.word {
+  grid-area: word;
+  display: flex;
+  /* ширина слова BIGSTREET в Anton ≈ 3.72em — растягиваем ровно на ширину экрана */
+  font-size: calc((100vw - 2 * var(--gutter)) / 3.76);
+  line-height: 0.82;
+  white-space: nowrap;
+  position: relative;
+  z-index: 2;
+}
+
+.char {
+  display: inline-block;
+  overflow: hidden;
+  padding-top: 0.04em;
+}
+
+.char > span {
+  display: inline-block;
+  transform: translateY(105%);
+  animation: char-up 1.1s var(--ease) forwards;
+  animation-delay: calc(80ms + var(--i) * 45ms);
+}
+
+@keyframes char-up {
+  to {
+    transform: translateY(0);
+  }
+}
+
+.visual {
+  grid-area: visual;
+  position: relative;
+  aspect-ratio: 4 / 5;
+  margin-top: -9vw;
+  clip-path: inset(100% 0 0 0);
+  animation: open 1.3s var(--ease-in-out) 0.25s forwards;
+}
+
+@keyframes open {
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+.copy {
+  grid-area: copy;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  padding-top: 10px;
+}
+
+.slogan {
+  font-size: 44px;
+  line-height: 0.92;
+  margin: 0;
+}
+
+.sub {
+  margin: 0;
+  max-width: 34ch;
+  color: var(--muted);
+  font-size: 14px;
+  opacity: 0;
+  animation: fade 0.9s var(--ease) 0.8s forwards;
+}
+
+.copy :global(.btn) {
+  width: 100%;
+  opacity: 0;
+  animation: fade 0.9s var(--ease) 0.9s forwards;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.scroll {
+  display: none;
+}
+
+/* ---------- Ноутбук: слово внизу, фото перекрывает его ---------- */
+
+@media (min-width: 900px) {
+  .hero {
+    height: 100svh;
+    min-height: 680px;
+    padding-bottom: 28px;
+    grid-template-columns: 1fr minmax(320px, 34vw) 1fr;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    grid-template-areas:
+      "meta meta meta"
+      "copy visual scroll"
+      "word word word";
+    column-gap: 32px;
+  }
+
+  .meta {
+    font-size: 11px;
+  }
+
+  .visual {
+    aspect-ratio: auto;
+    height: auto;
+    min-height: 0;
+    margin: 0 0 -9vw;
+    z-index: 3;
+  }
+
+  .word {
+    font-size: calc((100vw - 2 * var(--gutter) - 16px) / 3.76);
+    line-height: 0.8;
+    margin-top: 0;
+  }
+
+  .copy {
+    align-self: start;
+    padding-top: 4vh;
+    gap: 20px;
+  }
+
+  .slogan {
+    font-size: clamp(44px, min(5vw, 8.5vh), 88px);
+  }
+
+  .copy :global(.btn) {
+    width: auto;
+  }
+
+  .scroll {
+    grid-area: scroll;
+    display: block;
+    align-self: end;
+    justify-self: end;
+    padding-bottom: 9vw;
+    transition: color 0.3s;
+  }
+
+  .scroll:hover {
+    color: var(--orange);
+  }
+}

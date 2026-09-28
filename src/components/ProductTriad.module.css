@@ -1,0 +1,164 @@
+.triad {
+  padding: 0 var(--gutter);
+}
+
+.triad + .triad {
+  margin-top: 56px;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+  font-size: 10px;
+}
+
+.rule {
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
+/* ---------- Телефон: крупный слева на две строки, два маленьких справа ---------- */
+
+.grid {
+  display: grid;
+  grid-template-columns: 1.18fr 1fr;
+  grid-template-rows: auto auto;
+  column-gap: 10px;
+  row-gap: 22px;
+}
+
+.lead {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  display: flex;
+}
+
+.lead > * {
+  flex: 1;
+}
+
+.sideA {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.sideB {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.triad[data-mirror="true"] .grid {
+  grid-template-columns: 1fr 1.18fr;
+}
+
+.triad[data-mirror="true"] .lead {
+  grid-column: 2;
+}
+
+.triad[data-mirror="true"] .sideA,
+.triad[data-mirror="true"] .sideB {
+  grid-column: 1;
+}
+
+/* Неполная тройка (1–2 товара) */
+.triad[data-count="1"] .lead {
+  grid-row: auto;
+  grid-column: 1 / -1;
+  aspect-ratio: 4 / 5;
+}
+
+.triad[data-count="2"] .lead {
+  grid-row: 1;
+}
+
+.triad[data-count="2"] .lead > * > :first-child {
+  aspect-ratio: 3 / 4;
+}
+
+/* ---------- Планшет ---------- */
+
+@media (min-width: 640px) {
+  .grid {
+    column-gap: 18px;
+    row-gap: 32px;
+  }
+
+  .triad + .triad {
+    margin-top: 80px;
+  }
+}
+
+/* ---------- Ноутбук: ступенчатая editorial-раскладка в одну строку ---------- */
+
+@media (min-width: 900px) {
+  .triad + .triad {
+    margin-top: 120px;
+  }
+
+  .head {
+    margin-bottom: 24px;
+    font-size: 11px;
+  }
+
+  .grid {
+    grid-template-columns: 1.55fr 0.08fr 1fr 1fr;
+    grid-template-rows: auto;
+    column-gap: 24px;
+    align-items: start;
+  }
+
+  .lead {
+    grid-column: 1;
+    grid-row: 1;
+    aspect-ratio: auto;
+  }
+
+  .lead > * > :first-child {
+    flex: none;
+    aspect-ratio: 4 / 5;
+  }
+
+  .sideA {
+    grid-column: 3;
+    grid-row: 1;
+    padding-top: 22%;
+  }
+
+  .sideB {
+    grid-column: 4;
+    grid-row: 1;
+    padding-top: 6%;
+  }
+
+  .triad[data-mirror="true"] .grid {
+    grid-template-columns: 1fr 1fr 0.08fr 1.55fr;
+  }
+
+  .triad[data-mirror="true"] .lead {
+    grid-column: 4;
+  }
+
+  .triad[data-mirror="true"] .sideA {
+    grid-column: 1;
+    padding-top: 6%;
+  }
+
+  .triad[data-mirror="true"] .sideB {
+    grid-column: 2;
+    padding-top: 22%;
+  }
+
+  .triad[data-count="1"] .lead {
+    grid-column: 1;
+    aspect-ratio: auto;
+  }
+}
+
+@media (min-width: 1400px) {
+  .grid {
+    column-gap: 32px;
+  }
+}

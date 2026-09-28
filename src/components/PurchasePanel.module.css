@@ -1,0 +1,147 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+}
+
+.price {
+  font-family: var(--font-mono);
+  font-size: 18px;
+  color: var(--orange);
+}
+
+.group {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+
+.group legend {
+  padding: 0;
+  margin-bottom: 10px;
+}
+
+.value {
+  color: var(--white);
+}
+
+.warn {
+  color: var(--orange);
+}
+
+.colors {
+  display: flex;
+  gap: 10px;
+}
+
+.swatch {
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--line-strong);
+  outline: 1px solid transparent;
+  outline-offset: 3px;
+  transition: outline-color 0.3s var(--ease);
+}
+
+.swatch[aria-pressed="true"] {
+  outline-color: var(--orange);
+}
+
+.sizes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(52px, 1fr));
+  gap: 6px;
+}
+
+.sizes[data-shake="true"] {
+  animation: shake 0.45s var(--ease);
+}
+
+@keyframes shake {
+  20%,
+  60% {
+    transform: translateX(-5px);
+  }
+  40%,
+  80% {
+    transform: translateX(5px);
+  }
+}
+
+.size {
+  position: relative;
+  height: 46px;
+  border: 1px solid var(--line-strong);
+  font-size: 12px;
+  transition: border-color 0.25s, color 0.25s, background-color 0.25s;
+}
+
+.size[data-wide="true"] {
+  grid-column: 1 / -1;
+}
+
+.size[aria-pressed="true"] {
+  border-color: var(--orange);
+  background: var(--orange);
+  color: var(--black);
+}
+
+.size:disabled {
+  color: var(--line-strong);
+  cursor: not-allowed;
+}
+
+.size:disabled::after {
+  content: "";
+  position: absolute;
+  left: 18%;
+  right: 18%;
+  top: 50%;
+  height: 1px;
+  background: var(--line-strong);
+  transform: rotate(-18deg);
+}
+
+@media (hover: hover) {
+  .size:not(:disabled):not([aria-pressed="true"]):hover {
+    border-color: var(--white);
+  }
+}
+
+.buy {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 8px;
+}
+
+.add {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 16px;
+}
+
+.addLabel {
+  position: relative;
+  display: block;
+  height: 1.3em;
+  overflow: hidden;
+}
+
+.addLabel > span {
+  display: block;
+  line-height: 1.3em;
+  transition: transform 0.5s var(--ease);
+}
+
+.add[data-added="true"] .addLabel > span {
+  transform: translateY(-100%);
+}

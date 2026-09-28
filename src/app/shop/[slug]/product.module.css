@@ -1,0 +1,120 @@
+.page {
+  padding-top: var(--header-h);
+}
+
+/* ---------- Телефон: галерея → название → покупка ---------- */
+
+.layout {
+  display: grid;
+  grid-template-areas:
+    "gallery"
+    "info"
+    "buy";
+}
+
+.info {
+  grid-area: info;
+  padding: 22px var(--gutter) 0;
+}
+
+.info p {
+  margin: 0;
+}
+
+.name {
+  font-size: 15vw;
+  margin: 14px 0 12px;
+}
+
+.badge {
+  margin-bottom: 12px !important;
+}
+
+.desc {
+  color: var(--muted);
+  max-width: 44ch;
+  font-size: 14px;
+}
+
+.gallery {
+  grid-area: gallery;
+}
+
+.buy {
+  grid-area: buy;
+  padding: 28px var(--gutter) 0;
+}
+
+.specs {
+  margin: 32px 0 0;
+  border-top: 1px solid var(--line);
+}
+
+.specs > div {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.specs dd {
+  margin: 0;
+  font-size: 14px;
+}
+
+.recs {
+  margin-top: 96px;
+}
+
+.recsHead {
+  padding: 0 var(--gutter) 28px;
+}
+
+.recsHead p {
+  margin: 0 0 10px;
+}
+
+.recsTitle {
+  font-size: 48px;
+}
+
+/* ---------- Ноутбук: 24% / 50% / 26% ---------- */
+
+@media (min-width: 900px) {
+  .page {
+    padding-top: calc(var(--header-h) + 36px);
+  }
+
+  .layout {
+    grid-template-columns: 24fr 50fr 26fr;
+    grid-template-areas: "info gallery buy";
+    gap: 36px;
+    padding: 0 var(--gutter);
+    align-items: start;
+  }
+
+  .info,
+  .buy {
+    padding: 0;
+    position: sticky;
+    top: calc(var(--header-h) + 36px);
+  }
+
+  .name {
+    font-size: clamp(56px, 6vw, 104px);
+    margin-top: 22px;
+  }
+
+  .recs {
+    margin-top: 180px;
+  }
+
+  .recsHead {
+    padding-bottom: 48px;
+  }
+
+  .recsTitle {
+    font-size: clamp(64px, 7vw, 120px);
+  }
+}

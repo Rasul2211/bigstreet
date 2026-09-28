@@ -1,0 +1,134 @@
+.scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  background: rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s var(--ease), visibility 0.5s;
+}
+
+.scrim[data-open="true"] {
+  opacity: 1;
+  visibility: visible;
+}
+
+.drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 71;
+  width: min(100%, 460px);
+  background: var(--black);
+  border-left: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  visibility: hidden;
+  transition: transform 0.7s var(--ease-in-out), visibility 0.7s;
+}
+
+.drawer[data-open="true"] {
+  transform: none;
+  visibility: visible;
+}
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px var(--gutter);
+  border-bottom: 1px solid var(--line);
+}
+
+.head h2 {
+  font-size: 40px;
+}
+
+.head sup {
+  font-size: 11px;
+  vertical-align: top;
+  margin-left: 4px;
+}
+
+.head button {
+  min-height: 44px;
+}
+
+.empty {
+  padding: 40px var(--gutter);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.empty .display {
+  font-size: 56px;
+}
+
+.empty p {
+  margin: 0;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0 var(--gutter);
+  flex: 1;
+  overflow-y: auto;
+}
+
+.line {
+  display: grid;
+  grid-template-columns: 84px 1fr auto;
+  gap: 14px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.thumb {
+  height: 108px;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.name {
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: auto;
+}
+
+.controls button {
+  min-height: 40px;
+}
+
+.linePrice {
+  font-size: 12px;
+}
+
+.foot {
+  padding: 18px var(--gutter) calc(18px + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.total {
+  display: flex;
+  justify-content: space-between;
+}

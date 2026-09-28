@@ -1,0 +1,117 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: var(--black);
+  padding: 20px var(--gutter) 40px;
+  overflow-y: auto;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s var(--ease), visibility 0.4s;
+}
+
+.overlay[data-open="true"] {
+  opacity: 1;
+  visibility: visible;
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-bottom: 1px solid var(--orange);
+  padding-bottom: 8px;
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  background: none;
+  border: 0;
+  outline: none;
+  font-size: clamp(44px, 11vw, 120px);
+  line-height: 1;
+  padding: 0;
+}
+
+.input::placeholder {
+  color: var(--line-strong);
+}
+
+.close {
+  min-height: 44px;
+  padding: 0 4px;
+}
+
+.results {
+  margin-top: 28px;
+  display: flex;
+  flex-direction: column;
+}
+
+.results button {
+  color: var(--white);
+  text-decoration: underline;
+  text-decoration-color: var(--orange);
+  text-underline-offset: 4px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 56px 1fr auto;
+  grid-template-areas: "thumb name price" "thumb cat price";
+  align-items: center;
+  column-gap: 14px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+  animation: row-in 0.5s var(--ease) both;
+  animation-delay: var(--delay);
+}
+
+@keyframes row-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+.thumb {
+  grid-area: thumb;
+  height: 70px;
+}
+
+.name {
+  grid-area: name;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.row > :nth-child(3) {
+  grid-area: cat;
+}
+
+.row > :nth-child(4) {
+  grid-area: price;
+}
+
+@media (hover: hover) {
+  .row:hover .name {
+    color: var(--orange);
+  }
+}
+
+@media (min-width: 900px) {
+  .overlay {
+    padding-top: 32px;
+  }
+
+  .row {
+    grid-template-columns: 64px 2fr 1fr auto;
+    grid-template-areas: "thumb name cat price";
+  }
+
+  .thumb {
+    height: 80px;
+  }
+}

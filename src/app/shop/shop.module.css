@@ -1,0 +1,39 @@
+.shop {
+  padding-top: calc(var(--header-h) + 28px);
+}
+
+.head {
+  padding: 0 var(--gutter) 22px;
+}
+
+.head p {
+  margin: 0 0 10px;
+}
+
+.title {
+  font-size: 15vw;
+}
+
+.title sup {
+  font-size: 11px;
+  vertical-align: top;
+  margin-left: 6px;
+}
+
+.list {
+  padding-top: 32px;
+}
+
+@media (min-width: 900px) {
+  .shop {
+    padding-top: calc(var(--header-h) + 48px);
+  }
+
+  .title {
+    font-size: clamp(90px, 11vw, 190px);
+  }
+
+  .list {
+    padding-top: 64px;
+  }
+}

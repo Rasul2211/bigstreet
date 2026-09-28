@@ -1,0 +1,72 @@
+.gallery {
+  position: relative;
+}
+
+.track {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.track::-webkit-scrollbar {
+  display: none;
+}
+
+.slide {
+  flex: 0 0 100%;
+  aspect-ratio: 4 / 5;
+  scroll-snap-align: start;
+  position: relative;
+}
+
+.counter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px var(--gutter) 0;
+  font-size: 11px;
+}
+
+.dots {
+  display: flex;
+}
+
+.dots button {
+  position: relative;
+  width: 28px;
+  height: 32px;
+}
+
+.dots button::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  right: 4px;
+  top: 50%;
+  height: 1px;
+  background: var(--line-strong);
+  transition: background-color 0.4s var(--ease);
+}
+
+.dots button[aria-pressed="true"]::after {
+  background: var(--orange);
+  height: 2px;
+}
+
+@media (min-width: 900px) {
+  .track {
+    flex-direction: column;
+    gap: 12px;
+    overflow: visible;
+  }
+
+  .slide {
+    flex: none;
+  }
+
+  .counter {
+    display: none;
+  }
+}
