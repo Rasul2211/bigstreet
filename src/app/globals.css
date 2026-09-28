@@ -7,7 +7,7 @@
   --white: #f3f1ec;
   --bone: #e6e1d7;
   --muted: #8b8883;
-  --orange: #ff5a1f;
+  --orange: #ff6a1a;
   --orange-dim: #c9441a;
 
   --gutter: 16px;
@@ -15,7 +15,8 @@
   --ease: cubic-bezier(0.2, 0.7, 0.1, 1);
   --ease-in-out: cubic-bezier(0.7, 0, 0.2, 1);
 
-  --font-display: var(--font-anton), "Arial Narrow", sans-serif;
+  --font-display: var(--font-display-face), "Arial Narrow", sans-serif;
+  --font-gothic: var(--font-gothic-face), serif;
   --font-body: var(--font-inter), system-ui, sans-serif;
   --font-mono: var(--font-mono-face), ui-monospace, monospace;
 }
@@ -53,7 +54,6 @@ body {
   font-size: 15px;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
 }
 
 a {
@@ -101,11 +101,25 @@ select {
 
 .display {
   font-family: var(--font-display);
-  font-weight: 400;
+  font-weight: 700;
   text-transform: uppercase;
-  line-height: 0.88;
-  letter-spacing: -0.005em;
+  line-height: 0.92;
+  letter-spacing: -0.01em;
   margin: 0;
+}
+
+.gothic {
+  font-family: var(--font-gothic);
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+/* Контент поверх живого фона */
+.site-main,
+footer {
+  position: relative;
+  z-index: 1;
 }
 
 .mono {
@@ -151,6 +165,7 @@ select {
   font-size: 12px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+  white-space: nowrap;
   background: var(--orange);
   color: var(--black);
   overflow: hidden;

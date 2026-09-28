@@ -127,21 +127,73 @@
   width: 100%;
   min-height: 48px;
   padding: 0 16px;
+  transition: color 0.45s var(--ease), transform 0.2s var(--ease), clip-path 0.5s var(--ease-in-out);
+  clip-path: inset(0 0 0 0 round 0);
 }
 
-.addLabel {
-  position: relative;
-  display: block;
-  height: 1.3em;
-  overflow: hidden;
+.label {
+  display: inline-flex;
+  gap: 12px;
+  transition: opacity 0.25s, transform 0.4s var(--ease);
 }
 
-.addLabel > span {
-  display: block;
-  line-height: 1.3em;
-  transition: transform 0.5s var(--ease);
+/* Загрузка: кнопка сжимается в круг со спиннером */
+.add[data-state="loading"],
+.add[data-state="done"] {
+  clip-path: inset(0 calc(50% - 24px) 0 calc(50% - 24px) round 24px);
 }
 
-.add[data-added="true"] .addLabel > span {
-  transform: translateY(-100%);
+.add[data-state="loading"] .label,
+.add[data-state="done"] .label {
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+.spinner {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(0, 0, 0, 0.25);
+  border-top-color: var(--black);
+  border-radius: 50%;
+  opacity: 0;
+}
+
+.add[data-state="loading"] .spinner {
+  opacity: 1;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Готово: рисуется галочка */
+.check {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: var(--black);
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.check path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+.add[data-state="done"] .check path {
+  transition: stroke-dashoffset 0.45s var(--ease) 0.1s;
+  stroke-dashoffset: 0;
+}
+
+.old {
+  margin-right: 10px;
+  color: var(--muted);
+  font-size: 13px;
 }

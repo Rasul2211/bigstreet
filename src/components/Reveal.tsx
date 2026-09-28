@@ -31,9 +31,11 @@ export default function Reveal({ as = "div", variant = "fade", delay = 0, classN
       },
       { threshold: 0.12, rootMargin: "0px 0px -6% 0px" },
     );
-    io.observe(el);
+    // Для «шторки» следим за родителем: сам элемент обрезан clip-path,
+    // и браузер считает его невидимым, пока шторка закрыта.
+    io.observe(variant === "image" && el.parentElement ? el.parentElement : el);
     return () => io.disconnect();
-  }, []);
+  }, [variant]);
 
   const Tag = as as React.ElementType;
   return (

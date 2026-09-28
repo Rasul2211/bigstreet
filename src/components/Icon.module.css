@@ -1,0 +1,21 @@
+.icon {
+  width: 1em;
+  height: 1em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Иконка рисуется линией, когда блок появляется на экране */
+.icon[data-draw="true"] path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 1.6s var(--ease-in-out);
+}
+
+:global([data-in="true"]) .icon[data-draw="true"] path,
+.icon[data-draw="true"]:global(.is-drawn) path {
+  stroke-dashoffset: 0;
+}

@@ -1,5 +1,5 @@
 .catalog {
-  margin-top: 120px;
+  margin-top: 96px;
 }
 
 .catalogHead {
@@ -11,7 +11,12 @@
 }
 
 .h2 {
-  font-size: 64px;
+  font-size: 48px;
+}
+
+.outline {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--orange);
 }
 
 .triads {
@@ -28,44 +33,86 @@
   width: 100%;
 }
 
-.statement {
+/* ---------- Магазин ---------- */
+
+.visit {
   margin-top: 120px;
   padding: 0 var(--gutter);
+  display: grid;
+  gap: 32px;
 }
 
-.statement p {
-  margin: 0;
+.visitMono {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  border: 1px solid var(--line);
+  background:
+    linear-gradient(var(--line) 1px, transparent 1px) 0 0 / 100% 12.5%,
+    linear-gradient(90deg, var(--line) 1px, transparent 1px) 0 0 / 12.5% 100%;
 }
 
-.big {
-  margin-top: 18px !important;
-  font-size: 17vw;
-  line-height: 0.86;
+.visitLogo {
+  width: auto;
+  height: 70%;
+  color: var(--orange);
+  filter: drop-shadow(0 0 40px rgba(255, 106, 26, 0.35));
+  animation: float 6s var(--ease-in-out) infinite alternate;
 }
 
-.outline {
-  color: transparent;
-  -webkit-text-stroke: 1px var(--white);
+@keyframes float {
+  to {
+    transform: translateY(-12px) rotate(-3deg);
+  }
 }
 
-.statementFoot {
-  margin-top: 28px;
+.visitInfo p {
+  margin: 0 0 10px;
+}
+
+.facts {
+  list-style: none;
+  margin: 28px 0 0;
+  padding: 0;
+  border-top: 1px solid var(--line);
+}
+
+.facts li {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 15px;
+}
+
+.factIcon {
+  flex: none;
+  font-size: 28px;
+  color: var(--orange);
+}
+
+.visitCta {
+  margin-top: 24px;
+}
+
+.visitCta :global(.btn) {
+  width: 100%;
 }
 
 @media (min-width: 900px) {
   .catalog {
-    margin-top: 200px;
+    margin-top: 160px;
   }
 
   .catalogHead {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    padding-bottom: 28px;
+    padding-bottom: 32px;
   }
 
   .h2 {
-    font-size: clamp(80px, 9vw, 150px);
+    font-size: clamp(64px, 7vw, 124px);
+    max-width: 14ch;
   }
 
   .triads {
@@ -80,16 +127,14 @@
     width: auto;
   }
 
-  .statement {
+  .visit {
     margin-top: 200px;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
   }
 
-  .big {
-    font-size: 11vw;
-  }
-
-  .statementFoot {
-    display: flex;
-    justify-content: flex-end;
+  .visitCta :global(.btn) {
+    width: auto;
   }
 }

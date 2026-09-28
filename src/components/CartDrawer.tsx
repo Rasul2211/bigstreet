@@ -4,9 +4,9 @@ import Link from "next/link";
 import { useEffect } from "react";
 import { useCart } from "@/lib/cart";
 import { getProduct, photoPath } from "@/lib/products";
-import { price } from "@/lib/format";
 import ProductMedia from "./ProductMedia";
 import QtyStepper from "./QtyStepper";
+import AnimatedNumber from "./AnimatedNumber";
 import styles from "./CartDrawer.module.css";
 
 export default function CartDrawer() {
@@ -29,19 +29,19 @@ export default function CartDrawer() {
       <aside className={styles.drawer} data-open={isOpen} aria-hidden={!isOpen} aria-label="Корзина">
         <div className={styles.head}>
           <h2 className="display">
-            Cart <sup className="mono accent">{String(count).padStart(2, "0")}</sup>
+            Корзина <sup className="mono accent">{String(count).padStart(2, "0")}</sup>
           </h2>
           <button className="mono link-line" onClick={close}>
-            Close
+            Закрыть
           </button>
         </div>
 
         {lines.length === 0 ? (
           <div className={styles.empty}>
-            <p className="display">Empty.</p>
-            <p className="muted">Корзина ждёт первый дроп.</p>
+            <p className="display">Пусто.</p>
+            <p className="muted">Самое время выбрать новые кроссовки.</p>
             <Link href="/shop" className="btn" onClick={close}>
-              Shop collection <span className="arrow">→</span>
+              В каталог <span className="arrow">→</span>
             </Link>
           </div>
         ) : (
@@ -65,11 +65,13 @@ export default function CartDrawer() {
                       <div className={styles.controls}>
                         <QtyStepper small value={line.qty} onChange={(v) => setQty(i, v)} />
                         <button className="mono muted link-line" onClick={() => remove(i)}>
-                          Remove
+                          Удалить
                         </button>
                       </div>
                     </div>
-                    <span className={`mono ${styles.linePrice}`}>{price(p.price * line.qty)}</span>
+                    <span className={`mono ${styles.linePrice}`}>
+                      <AnimatedNumber value={p.price * line.qty} />
+                    </span>
                   </li>
                 );
               })}
@@ -77,11 +79,13 @@ export default function CartDrawer() {
 
             <div className={styles.foot}>
               <div className={styles.total}>
-                <span className="mono muted">Subtotal</span>
-                <span className="mono">{price(subtotal)}</span>
+                <span className="mono muted">Сумма</span>
+                <span className="mono">
+                  <AnimatedNumber value={subtotal} />
+                </span>
               </div>
               <Link href="/checkout" className="btn" onClick={close}>
-                Checkout <span className="arrow">→</span>
+                Оформить заказ <span className="arrow">→</span>
               </Link>
             </div>
           </>

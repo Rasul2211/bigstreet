@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { photoPath, type Product } from "@/lib/products";
 import { pad } from "@/lib/format";
 import ProductMedia from "./ProductMedia";
@@ -11,10 +11,26 @@ import styles from "./ProductGallery.module.css";
  * Телефон: горизонтальная лента кадров со свайпом и счётчиком.
  * Ноутбук: кадры идут столбцом, крупно.
  */
-export default function ProductGallery({ product }: { product: Product }) {
+export default function ProductGallery({ product, goTo = 0 }: { product: Product; goTo?: number }) {
   const [current, setCurrent] = useState(0);
   const track = useRef<HTMLDivElement>(null);
   const photos = Array.from({ length: product.photos }, (_, i) => photoPath(product.slug, i));
+
+  // Переход к нужному кадру (например, при выборе цвета). Первый рендер пропускаем.
+  const mounted = useRef(false);
+  useEffect(() => {
+    const el = track.current;
+    if (!mounted.current) {
+      mounted.current = true;
+      return;
+    }
+    if (!el) return;
+    if (window.matchMedia("(min-width: 900px)").matches) {
+      (el.children[goTo] as HTMLElement | undefined)?.scrollIntoView({ behavior: "smooth", block: "center" });
+    } else {
+      el.scrollTo({ left: goTo * el.clientWidth, behavior: "smooth" });
+    }
+  }, [goTo]);
 
   function onScroll() {
     const el = track.current;

@@ -1,0 +1,40 @@
+.host {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.host canvas {
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  opacity: 0;
+  animation: in 1.4s var(--ease) 0.2s forwards;
+}
+
+@keyframes in {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.fallback {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  height: 62%;
+  width: auto;
+  transform: translate(-50%, -50%);
+  color: var(--orange);
+  opacity: 0.9;
+}
+
+.host[data-ready="true"] .fallback {
+  display: none;
+}

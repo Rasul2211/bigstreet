@@ -1,26 +1,37 @@
 import Link from "next/link";
 import Hero from "@/components/Hero";
-import FeatureDrop from "@/components/FeatureDrop";
+import Marquee from "@/components/Marquee";
+import SneakerShowcase from "@/components/SneakerShowcase";
 import CategoryRail from "@/components/CategoryRail";
 import ProductTriad from "@/components/ProductTriad";
 import Reveal from "@/components/Reveal";
-import { products, toTriads } from "@/lib/products";
+import Icon from "@/components/Icon";
+import Logo from "@/components/Logo";
+import { products, productsByCategory, toTriads } from "@/lib/products";
+import { store } from "@/lib/store";
 import styles from "./home.module.css";
 
 export default function Home() {
-  const drop = products.filter((p) => p.isNew).slice(0, 4);
-  const latest = toTriads(products.slice(0, 9));
+  const sneakers = productsByCategory("sneakers");
+  const clothes = products.filter((p) => p.category !== "sneakers");
+  const latest = toTriads(clothes.slice(0, 9));
 
   return (
     <>
       <Hero />
 
-      <FeatureDrop items={drop} />
+      <Marquee items={["Streetwear & Sneakers", store.city, store.address, "Без выходных 10:00–20:30"]} />
+
+      <SneakerShowcase items={sneakers} />
+
+      <Marquee tone="orange" reverse items={["Новые поступления", "Оверсайз", "Кроссовки", "Доставка по Таджикистану"]} />
 
       <section className={styles.catalog}>
         <Reveal className={styles.catalogHead}>
-          <p className="mono accent">(02) Shop</p>
-          <h2 className={`display ${styles.h2}`}>The line-up</h2>
+          <p className="mono accent">(03) Одежда</p>
+          <h2 className={`display ${styles.h2}`}>
+            Меня волнует <span className={styles.outline}>только</span> одежда
+          </h2>
         </Reveal>
         <CategoryRail />
         <div className={styles.triads}>
@@ -30,29 +41,57 @@ export default function Home() {
         </div>
         <div className={styles.more}>
           <Link href="/shop" className="btn btn--ghost">
-            View all pieces <span className="arrow">→</span>
+            Весь каталог — {products.length} вещей <span className="arrow">→</span>
           </Link>
         </div>
       </section>
 
-      <section className={styles.statement}>
-        <Reveal>
-          <p className="mono accent">(03) BIGSTREET</p>
+      <section className={styles.visit}>
+        <Reveal className={styles.visitMono} variant="image">
+          <Logo className={styles.visitLogo} />
         </Reveal>
-        <Reveal delay={100}>
-          <p className={`display ${styles.big}`}>
-            Big on detail.
-            <br />
-            <span className={styles.outline}>Made for</span>
-            <br />
-            the street<span className="accent">.</span>
-          </p>
-        </Reveal>
-        <Reveal delay={200} className={styles.statementFoot}>
-          <Link href="/about" className="mono link-line">
-            About the brand →
-          </Link>
-        </Reveal>
+        <div className={styles.visitInfo}>
+          <Reveal>
+            <p className="mono accent">(04) Магазин</p>
+            <h2 className={`display ${styles.h2}`}>
+              Приходи <br />
+              примерить<span className="accent">.</span>
+            </h2>
+          </Reveal>
+          <Reveal as="ul" className={styles.facts} delay={120}>
+            <li>
+              <Icon name="pin" draw className={styles.factIcon} />
+              <span>
+                {store.address}
+                <br />
+                <span className="muted">
+                  {store.city}, {store.street}
+                </span>
+              </span>
+            </li>
+            <li>
+              <Icon name="clock" draw className={styles.factIcon} />
+              <span>{store.hours}</span>
+            </li>
+            <li>
+              <Icon name="phone" draw className={styles.factIcon} />
+              <a href={store.phoneHref} className="link-line">
+                {store.phone}
+              </a>
+            </li>
+            <li>
+              <Icon name="send" draw className={styles.factIcon} />
+              <a href={store.telegram} target="_blank" rel="noreferrer" className="link-line">
+                Telegram @bigstreetdushanbe
+              </a>
+            </li>
+          </Reveal>
+          <Reveal delay={200} className={styles.visitCta}>
+            <a href={store.map} target="_blank" rel="noreferrer" className="btn">
+              Открыть на карте <span className="arrow">→</span>
+            </a>
+          </Reveal>
+        </div>
       </section>
     </>
   );

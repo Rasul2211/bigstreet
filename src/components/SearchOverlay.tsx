@@ -26,7 +26,10 @@ export default function SearchOverlay({ open, onClose }: { open: boolean; onClos
     const s = q.trim().toLowerCase();
     if (!s) return [];
     return products.filter(
-      (p) => p.name.toLowerCase().includes(s) || categoryLabel(p.category).toLowerCase().includes(s),
+      (p) =>
+        p.name.toLowerCase().includes(s) ||
+        (p.brand ?? "").toLowerCase().includes(s) ||
+        categoryLabel(p.category).toLowerCase().includes(s),
     );
   }, [q]);
 
@@ -40,14 +43,14 @@ export default function SearchOverlay({ open, onClose }: { open: boolean; onClos
           id="search-input"
           ref={input}
           className={`display ${styles.input}`}
-          placeholder="Search"
+          placeholder="Поиск"
           value={q}
           onChange={(e) => setQ(e.target.value)}
           autoComplete="off"
           tabIndex={open ? 0 : -1}
         />
         <button className={`mono ${styles.close}`} onClick={onClose} tabIndex={open ? 0 : -1}>
-          Close
+          Закрыть
         </button>
       </div>
 
@@ -55,9 +58,10 @@ export default function SearchOverlay({ open, onClose }: { open: boolean; onClos
         {q && results.length === 0 && <p className="mono muted">Ничего не найдено</p>}
         {!q && (
           <p className="mono muted">
-            Попробуйте: <button onClick={() => setQ("hoodie")}>hoodie</button>,{" "}
-            <button onClick={() => setQ("tee")}>tee</button>,{" "}
-            <button onClick={() => setQ("pants")}>pants</button>
+            Попробуй: <button onClick={() => setQ("New Balance")}>New Balance</button>,{" "}
+            <button onClick={() => setQ("Nike")}>Nike</button>,{" "}
+            <button onClick={() => setQ("футболка")}>футболка</button>,{" "}
+            <button onClick={() => setQ("джинсы")}>джинсы</button>
           </p>
         )}
         {results.map((p, i) => (

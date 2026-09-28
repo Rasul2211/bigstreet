@@ -1,6 +1,7 @@
 # BIGSTREET
 
-Интернет-магазин streetwear-бренда BIGSTREET на Next.js (App Router, TypeScript, CSS Modules).
+Сайт магазина BIGSTREET — Streetwear & Sneakers, Душанбе (ТЦ «Аниса», 3 этаж).
+Next.js (App Router, TypeScript, CSS Modules), three.js, model-viewer.
 
 ## Запуск
 
@@ -9,33 +10,31 @@ npm install
 npm run dev
 ```
 
-Откройте http://localhost:3000
-
-## Структура
+## Где что лежит
 
 ```
-src/
-  app/                  страницы: главная, /shop, /shop/[slug], /checkout, /about
-  components/           Hero, ProductTriad, ProductObject, PurchasePanel, CartDrawer ...
-  lib/products.ts       каталог: товары, цены, размеры, цвета, категории
-  lib/cart.tsx          корзина (сохраняется в браузере)
-  lib/format.ts         валюта
-public/images/
-  hero/hero-01.jpg      главное фото на первом экране
-  about/about-01.jpg    фото на странице About
-  products/<slug>/01.jpg, 02.jpg, 03.jpg   фото товаров
+src/lib/products.ts     каталог: товары, цены (сом.), размеры, цвета, категории
+src/lib/store.ts        контакты магазина, цены доставки, города
+src/lib/payments.ts     оплата Алиф / Душанбе Сити (подключается после договора с банком)
+src/app/api/orders      приём заказов
+public/images/products/<slug>/01.jpg, 02.jpg ...   фото товаров
+public/models/<slug>.glb                            3D-модели кроссовок (Polycam → GLB)
+public/images/360/<slug>/01.jpg ... 36.jpg          360° одежды
 ```
 
-## Как добавить фотографии
+Цены с пометкой `priceTodo: true` — временные, их нужно уточнить.
 
-1. Найдите `slug` товара в `src/lib/products.ts` (например, `concrete-hoodie`).
-2. Положите фото в `public/images/products/concrete-hoodie/` с именами `01.jpg`, `02.jpg`, `03.jpg`.
-3. `01.jpg` — главный кадр, `02.jpg` — появляется при наведении в каталоге.
-4. Число фото товара задаётся полем `photos`.
+## 3D и 360°
 
-Пока файла нет, на его месте показывается фирменная заглушка с путём, куда положить фото.
-Рекомендуемые пропорции — 4:5 (например, 1600×2000).
+- Кроссовок: положите `public/models/<slug>.glb` и добавьте товару `model3d: "/models/<slug>.glb"`.
+- Одежда: положите 36 кадров в `public/images/360/<slug>/` и добавьте товару `spin360: 36`.
 
-## Оформление заказа
+На странице товара сама появится вкладка «3D» или «360°».
 
-Форма в `/checkout` пока не отправляет данные никуда: подключите свой бэкенд, CRM или платёжную систему в `src/app/checkout/page.tsx`.
+## Переменные окружения (Vercel → Settings → Environment Variables)
+
+| Переменная | Зачем |
+|---|---|
+| `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` | новые заказы приходят продавцу в Telegram |
+| `ALIF_MERCHANT_ID`, `ALIF_SECRET_KEY` | оплата через Алиф (после договора) |
+| `DC_MERCHANT_ID`, `DC_SECRET_KEY` | оплата через Душанбе Сити (после договора) |

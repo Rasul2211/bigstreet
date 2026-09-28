@@ -1,5 +1,5 @@
-// Валюта магазина. Поменяйте здесь, если нужна другая.
-export const CURRENCY = "₽";
+// Валюта магазина.
+export const CURRENCY = "сом.";
 
 export function price(value: number) {
   return `${value.toLocaleString("ru-RU")} ${CURRENCY}`;

@@ -1,0 +1,132 @@
+/* ---------- Телефон: медиа → название → покупка ---------- */
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    "media"
+    "info"
+    "buy";
+}
+
+.info {
+  grid-area: info;
+  padding: 22px var(--gutter) 0;
+}
+
+.info p {
+  margin: 0;
+}
+
+.brand {
+  margin-top: 14px !important;
+  font-size: 28px;
+  color: var(--orange);
+}
+
+.name {
+  font-size: 11vw;
+  margin: 6px 0 12px;
+}
+
+.badge {
+  margin-bottom: 12px !important;
+}
+
+.desc {
+  color: var(--muted);
+  max-width: 44ch;
+  font-size: 14px;
+}
+
+.media {
+  grid-area: media;
+  position: relative;
+}
+
+.tabs {
+  position: absolute;
+  z-index: 5;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  padding: 3px;
+  background: rgba(10, 10, 10, 0.8);
+  border: 1px solid var(--line-strong);
+}
+
+.tabs button {
+  min-width: 64px;
+  min-height: 34px;
+  font-size: 11px;
+  color: var(--muted);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.tabs button[aria-selected="true"] {
+  background: var(--orange);
+  color: var(--black);
+}
+
+.viewer {
+  aspect-ratio: 4 / 5;
+}
+
+.buy {
+  grid-area: buy;
+  padding: 28px var(--gutter) 0;
+}
+
+.specs {
+  margin: 32px 0 0;
+  border-top: 1px solid var(--line);
+}
+
+.specs > div {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.specs dd {
+  margin: 0;
+  font-size: 14px;
+}
+
+/* ---------- Ноутбук: 24% / 50% / 26% ---------- */
+
+@media (min-width: 900px) {
+  .layout {
+    grid-template-columns: 24fr 50fr 26fr;
+    grid-template-areas: "info media buy";
+    gap: 36px;
+    padding: 0 var(--gutter);
+    align-items: start;
+  }
+
+  .info,
+  .buy {
+    padding: 0;
+    position: sticky;
+    top: calc(var(--header-h) + 36px);
+  }
+
+  .brand {
+    font-size: 36px;
+  }
+
+  .name {
+    font-size: clamp(44px, 4.6vw, 84px);
+    margin-top: 6px;
+  }
+
+  .viewer {
+    position: sticky;
+    top: calc(var(--header-h) + 36px);
+    aspect-ratio: auto;
+    height: calc(100vh - var(--header-h) - 72px);
+  }
+}

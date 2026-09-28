@@ -4,14 +4,16 @@ import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 import { useCart } from "@/lib/cart";
+import { store } from "@/lib/store";
+import Logo from "./Logo";
 import SearchOverlay from "./SearchOverlay";
 import styles from "./Header.module.css";
 
 const NAV = [
-  { href: "/shop", label: "Shop" },
-  { href: "/shop?c=new", label: "New" },
-  { href: "/#collection", label: "Collection" },
-  { href: "/about", label: "About" },
+  { href: "/shop", label: "Каталог" },
+  { href: "/shop?c=sneakers", label: "Кроссовки" },
+  { href: "/shop?c=tshirts", label: "Одежда" },
+  { href: "/about", label: "Магазин" },
 ];
 
 function NavLinks({ onNavigate, big }: { onNavigate?: () => void; big?: boolean }) {
@@ -76,8 +78,9 @@ export default function Header() {
   return (
     <>
       <header className={styles.header} data-solid={scrolled || menu}>
-        <Link href="/" className={`display ${styles.logo}`} aria-label="BIGSTREET — на главную">
-          BIG<span className="accent">/</span>STREET
+        <Link href="/" className={styles.logo} aria-label="BIGSTREET — на главную">
+          <Logo className={styles.mark} />
+          <span className="display">Bigstreet</span>
         </Link>
 
         <nav className={`mono ${styles.nav}`} aria-label="Основное меню">
@@ -88,14 +91,14 @@ export default function Header() {
 
         <div className={`mono ${styles.actions}`}>
           <button className={styles.action} onClick={() => setSearch(true)} aria-label="Поиск">
-            <span className={styles.textOnly}>Search</span>
+            <span className={styles.textOnly}>Поиск</span>
             <svg className={styles.iconOnly} viewBox="0 0 24 24" aria-hidden="true">
               <circle cx="10.5" cy="10.5" r="6.5" />
               <path d="M15.5 15.5 L21 21" />
             </svg>
           </button>
           <button className={styles.action} onClick={open} aria-label={`Корзина, товаров: ${count}`}>
-            <span className={styles.textOnly}>Cart</span>
+            <span className={styles.textOnly}>Корзина</span>
             <svg className={styles.iconOnly} viewBox="0 0 24 24" aria-hidden="true">
               <path d="M5 8 H19 L18 21 H6 Z" />
               <path d="M9 8 V6 A3 3 0 0 1 15 6 V8" />
@@ -124,7 +127,13 @@ export default function Header() {
             <NavLinks big onNavigate={() => setMenu(false)} />
           </Suspense>
         </nav>
-        <p className={`mono muted ${styles.menuFoot}`}>BIGSTREET — Streetwear for the next generation</p>
+        <div className={`mono ${styles.menuFoot}`}>
+          <p className="muted">{store.address}</p>
+          <p className="muted">{store.hours}</p>
+          <a href={store.phoneHref} className="accent">
+            {store.phone}
+          </a>
+        </div>
       </div>
 
       <SearchOverlay open={search} onClose={() => setSearch(false)} />

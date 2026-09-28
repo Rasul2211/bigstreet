@@ -1,31 +1,44 @@
 import Link from "next/link";
-import { categories, productsByCategory } from "@/lib/products";
-import { pad } from "@/lib/format";
+import { activeCategories, products, productsByCategory } from "@/lib/products";
+import Icon from "./Icon";
+import Reveal from "./Reveal";
 import styles from "./CategoryRail.module.css";
 
-/** Горизонтальная лента категорий — крупная типографика вместо select. */
+/** Категории как «актуальное» в Instagram BIGSTREET: кружки с оранжевыми линейными иконками. */
 export default function CategoryRail({ active }: { active?: string }) {
-  const all = [{ id: "all", label: "All" }, ...categories];
+  const items = [
+    { id: "all", label: "Все", icon: null, count: products.length },
+    ...activeCategories().map((c) => ({ ...c, count: productsByCategory(c.id).length })),
+  ];
   return (
     <nav className={styles.rail} aria-label="Категории">
-      <ul className={styles.list}>
-        {all.map((c) => {
+      <Reveal as="ul" className={styles.list}>
+        {items.map((c, i) => {
           const isActive = (active ?? "all") === c.id;
           return (
-            <li key={c.id}>
+            <li key={c.id} style={{ "--i": i } as React.CSSProperties}>
               <Link
                 href={c.id === "all" ? "/shop" : `/shop?c=${c.id}`}
                 className={styles.item}
                 aria-current={isActive ? "page" : undefined}
                 scroll={false}
               >
-                <span className="display">{c.label}</span>
-                <sup className="mono">{pad(productsByCategory(c.id).length)}</sup>
+                <span className={styles.ring}>
+                  {c.icon ? (
+                    <Icon name={c.icon} draw className={styles.icon} />
+                  ) : (
+                    <span className={`display ${styles.all}`}>bs</span>
+                  )}
+                </span>
+                <span className={styles.label}>
+                  {c.label}
+                  <sup className="mono">{c.count}</sup>
+                </span>
               </Link>
             </li>
           );
         })}
-      </ul>
+      </Reveal>
     </nav>
   );
 }

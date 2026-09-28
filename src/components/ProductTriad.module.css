@@ -74,7 +74,7 @@
   grid-row: 1;
 }
 
-.triad[data-count="2"] .lead > * > :first-child {
+.triad[data-count="2"] .lead {
   aspect-ratio: 3 / 4;
 }
 
@@ -116,9 +116,8 @@
     aspect-ratio: auto;
   }
 
-  .lead > * > :first-child {
-    flex: none;
-    aspect-ratio: 4 / 5;
+  .lead {
+    display: block;
   }
 
   .sideA {

@@ -5,7 +5,7 @@ import { categories, categoryLabel, productsByCategory, toTriads } from "@/lib/p
 import { pad } from "@/lib/format";
 import styles from "./shop.module.css";
 
-export const metadata: Metadata = { title: "Shop — BIGSTREET" };
+export const metadata: Metadata = { title: "Каталог — BIGSTREET" };
 
 export default async function Shop({ searchParams }: { searchParams: Promise<{ c?: string }> }) {
   const { c } = await searchParams;
@@ -17,10 +17,10 @@ export default async function Shop({ searchParams }: { searchParams: Promise<{ c
     <div className={styles.shop}>
       <header className={styles.head}>
         <p className="mono muted">
-          Shop / <span className="accent">{valid ? categoryLabel(valid) : "All"}</span>
+          Каталог / <span className="accent">{valid ? categoryLabel(valid) : "Все"}</span>
         </p>
         <h1 className={`display ${styles.title}`}>
-          {valid ? categoryLabel(valid) : "All pieces"}
+          {valid ? categoryLabel(valid) : "Все вещи"}
           <sup className="mono accent">{pad(list.length)}</sup>
         </h1>
       </header>

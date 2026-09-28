@@ -1,0 +1,254 @@
+.page {
+  padding: calc(var(--header-h) + 28px) var(--gutter) 0;
+}
+
+.title {
+  font-size: 16vw;
+  margin-bottom: 28px;
+}
+
+.layout {
+  display: grid;
+  gap: 40px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+.form fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.form legend {
+  padding: 0;
+  margin-bottom: 18px;
+}
+
+.form label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.form input,
+.form textarea {
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--line-strong);
+  border-radius: 0;
+  padding: 10px 0;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s var(--ease);
+  resize: vertical;
+}
+
+.form input:focus,
+.form textarea:focus {
+  border-bottom-color: var(--orange);
+}
+
+.toggle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.toggle button {
+  min-height: 48px;
+  border: 1px solid var(--line-strong);
+  font-size: 12px;
+  transition: all 0.3s var(--ease);
+}
+
+.toggle button[aria-pressed="true"] {
+  border-color: var(--orange);
+  background: var(--orange);
+  color: var(--black);
+}
+
+.summary p {
+  margin: 0 0 12px;
+}
+
+.summary ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--line);
+}
+
+.summary li {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+
+.itemName {
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 13px;
+}
+
+.total {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 0;
+  font-size: 15px;
+}
+
+.done {
+  min-height: 70svh;
+  padding: calc(var(--header-h) + 48px) var(--gutter) 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+.done p {
+  margin: 0;
+}
+
+@media (min-width: 900px) {
+  .page {
+    padding-top: calc(var(--header-h) + 48px);
+  }
+
+  .title {
+    font-size: clamp(90px, 10vw, 170px);
+    margin-bottom: 56px;
+  }
+
+  .layout {
+    grid-template-columns: 1.3fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .summary {
+    position: sticky;
+    top: calc(var(--header-h) + 32px);
+  }
+
+  .form :global(.btn) {
+    align-self: flex-start;
+  }
+}
+
+/* ---------- Доставка и оплата ---------- */
+
+.form select {
+  background: var(--black);
+  border: 0;
+  border-bottom: 1px solid var(--line-strong);
+  border-radius: 0;
+  padding: 10px 0;
+  font-size: 16px;
+  outline: none;
+}
+
+.form select:focus {
+  border-bottom-color: var(--orange);
+}
+
+.deliveryNote {
+  margin: -6px 0 0;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.payments {
+  display: grid;
+  gap: 8px;
+}
+
+.pay {
+  position: relative;
+  display: grid !important;
+  grid-template-columns: auto 1fr;
+  grid-template-areas: "radio title" "radio note";
+  column-gap: 14px;
+  align-items: center;
+  padding: 14px 16px;
+  border: 1px solid var(--line-strong);
+  cursor: pointer;
+  transition: border-color 0.3s, background-color 0.3s;
+}
+
+.pay input {
+  grid-area: radio;
+  width: 18px;
+  height: 18px;
+  accent-color: var(--orange);
+}
+
+.payTitle {
+  grid-area: title;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.pay > :last-child {
+  grid-area: note;
+  font-size: 10px;
+}
+
+.pay[data-active="true"] {
+  border-color: var(--orange);
+  background: rgba(255, 106, 26, 0.06);
+}
+
+.pay[data-off="true"] {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.error {
+  margin: 0;
+  padding: 12px 14px;
+  border: 1px solid var(--orange);
+  color: var(--orange);
+  font-size: 12px;
+}
+
+.summary li {
+  align-items: center;
+}
+
+.thumb {
+  flex: none;
+  width: 52px;
+  height: 64px;
+}
+
+.itemInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0 0;
+}
+
+.help {
+  margin-top: 16px !important;
+  font-size: 11px;
+}

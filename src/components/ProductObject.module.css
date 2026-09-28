@@ -1,12 +1,32 @@
 .object {
+  position: relative;
   display: flex;
   flex-direction: column;
   min-width: 0;
+}
+
+.mediaWrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.object[data-size="side"] .mediaWrap {
+  flex: none;
+}
+
+.link {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
   transition: transform 0.25s var(--ease);
 }
 
 /* Отклик на нажатие пальцем */
-.object:active {
+.link:active {
   transform: scale(0.985);
 }
 
@@ -23,9 +43,12 @@
   aspect-ratio: 3 / 4;
 }
 
-.frame > * {
+.frame > :not(.tags):not(.hint) {
   position: absolute;
   inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   transition: transform 1.2s var(--ease), opacity 0.7s var(--ease);
 }
 
@@ -33,15 +56,81 @@
   opacity: 0;
 }
 
-.tag {
+/* Оранжевая рамка-уголки при наведении */
+.frame::after {
+  content: "";
   position: absolute;
-  inset: auto;
+  inset: 8px;
+  z-index: 2;
+  border: 1px solid var(--orange);
+  clip-path: polygon(0 0, 18px 0, 18px 1px, 1px 1px, 1px 18px, 0 18px, 0 0, 100% 100%, calc(100% - 18px) 100%, calc(100% - 18px) calc(100% - 1px), calc(100% - 1px) calc(100% - 1px), calc(100% - 1px) calc(100% - 18px), 100% calc(100% - 18px), 100% 100%);
+  opacity: 0;
+  transform: scale(1.04);
+  transition: opacity 0.5s var(--ease), transform 0.6s var(--ease);
+  pointer-events: none;
+}
+
+.tags {
+  position: absolute;
   top: 8px;
   left: 8px;
+  z-index: 3;
+  display: flex;
+  gap: 4px;
+}
+
+.tag {
   padding: 3px 6px;
   font-size: 9px;
   background: var(--orange);
   color: var(--black);
+}
+
+.sale {
+  background: var(--white);
+}
+
+.ghost {
+  background: var(--black);
+  color: var(--orange);
+  border: 1px solid var(--orange);
+}
+
+/* Точка-подсказка «есть второй ракурс» */
+.hint {
+  display: none;
+}
+
+/* Кнопка быстрого просмотра: на телефоне — круглый «+» */
+.quick {
+  position: absolute;
+  z-index: 4;
+  right: 6px;
+  top: 6px;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  background: rgba(10, 10, 10, 0.72);
+  color: var(--white);
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  transition: background-color 0.3s, color 0.3s, transform 0.2s var(--ease);
+}
+
+.quick:active {
+  transform: scale(0.9);
+  background: var(--orange);
+  color: var(--black);
+}
+
+.quickText {
+  display: none;
+}
+
+.plus {
+  font-size: 18px;
+  line-height: 1;
 }
 
 .caption {
@@ -66,20 +155,21 @@
   grid-area: name;
   font-size: 12px;
   font-weight: 600;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.02em;
   text-transform: uppercase;
   line-height: 1.3;
-  overflow: hidden;
-}
-
-.nameInner {
-  display: inline-block;
+  transition: color 0.3s;
 }
 
 .price {
   grid-area: price;
   font-size: 11px;
   color: var(--muted);
+}
+
+.old {
+  margin-right: 6px;
+  opacity: 0.6;
 }
 
 .more {
@@ -91,6 +181,16 @@
 }
 
 @media (min-width: 900px) {
+  .object[data-size="lead"] .mediaWrap,
+  .object[data-size="lead"] .link {
+    flex: none;
+  }
+
+  .object[data-size="lead"] .frame {
+    flex: none;
+    aspect-ratio: 4 / 5;
+  }
+
   .caption {
     grid-template-columns: 34px 1fr auto;
     grid-template-areas:
@@ -111,8 +211,7 @@
 
   .more {
     grid-area: more;
-    display: flex;
-    justify-content: space-between;
+    display: block;
     color: var(--muted);
     font-size: 10px;
     height: 0;
@@ -121,20 +220,51 @@
     transition: opacity 0.5s var(--ease), transform 0.5s var(--ease), height 0.5s var(--ease);
   }
 
-  .view {
-    color: var(--orange);
+  /* Ноутбук: полоса «Быстрый просмотр» выезжает снизу кадра */
+  .quick {
+    top: auto;
+    right: 12px;
+    left: 12px;
+    bottom: 12px;
+    width: auto;
+    height: 44px;
+    border-radius: 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 16px;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    background: var(--orange);
+    color: var(--black);
+    border: 0;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.4s var(--ease), transform 0.5s var(--ease), background-color 0.3s;
+  }
+
+  .quickText {
+    display: inline;
+  }
+
+  .quick:hover {
+    background: var(--white);
   }
 }
 
 /* Наведение — только там, где есть мышь */
 @media (hover: hover) {
   .object:hover .frame > :first-child {
-    transform: scale(1.04);
+    transform: scale(1.05);
   }
 
   .object:hover .alt {
     opacity: 1;
-    transform: scale(1.04);
+    transform: scale(1.05);
+  }
+
+  .object:hover .frame::after {
+    opacity: 1;
+    transform: none;
   }
 
   .object:hover .name {
@@ -144,6 +274,12 @@
   .object:hover .more {
     height: 22px;
     padding-top: 6px;
+    opacity: 1;
+    transform: none;
+  }
+
+  .object:hover .quick,
+  .quick:focus-visible {
     opacity: 1;
     transform: none;
   }

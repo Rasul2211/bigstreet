@@ -1,10 +1,10 @@
 .rail {
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
   overflow-x: auto;
   scrollbar-width: none;
   scroll-snap-type: x proximity;
   -webkit-overflow-scrolling: touch;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
 }
 
 .rail::-webkit-scrollbar {
@@ -14,83 +14,145 @@
 .list {
   list-style: none;
   margin: 0;
-  padding: 0 var(--gutter);
+  padding: 16px var(--gutter);
   display: flex;
-  gap: 26px;
+  gap: 14px;
   width: max-content;
+  /* отменяем общий fade-in у Reveal: здесь анимируются сами кружки */
+  opacity: 1 !important;
+  transform: none !important;
 }
 
 .list li {
   scroll-snap-align: start;
   scroll-margin-left: var(--gutter);
+  opacity: 0;
+  transform: translateY(14px) scale(0.9);
+  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+  transition-delay: calc(var(--i) * 60ms);
+}
+
+.list[data-in="true"] li {
+  opacity: 1;
+  transform: none;
 }
 
 .item {
-  position: relative;
   display: flex;
-  align-items: flex-start;
-  gap: 4px;
-  padding: 16px 0 14px;
-  color: var(--line-strong);
-  transition: color 0.4s var(--ease);
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 72px;
 }
 
-.item .display {
-  font-size: 34px;
-  line-height: 1;
-  white-space: nowrap;
+.ring {
+  position: relative;
+  width: 66px;
+  height: 66px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #121317;
+  color: var(--orange);
+  box-shadow: 0 0 0 1px var(--line-strong);
+  transition: background-color 0.4s var(--ease), color 0.4s var(--ease), box-shadow 0.4s var(--ease), transform 0.3s var(--ease);
 }
 
-.item sup {
-  font-size: 9px;
-  color: var(--muted);
-}
-
-.item::after {
+/* вращающееся кольцо у активной категории */
+.ring::before {
   content: "";
   position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -1px;
-  height: 2px;
-  background: var(--orange);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.6s var(--ease);
+  inset: -4px;
+  border-radius: 50%;
+  border: 1px dashed var(--orange);
+  opacity: 0;
+  transition: opacity 0.4s;
 }
 
-.item[aria-current="page"] {
-  color: var(--white);
+.icon {
+  font-size: 34px;
 }
 
-.item[aria-current="page"]::after {
-  transform: scaleX(1);
+.all {
+  font-family: var(--font-gothic);
+  font-size: 30px;
+  text-transform: none;
+  line-height: 1;
 }
 
-.item[aria-current="page"] sup {
+.label {
+  font-size: 11px;
+  text-align: center;
+  color: var(--muted);
+  white-space: nowrap;
+  transition: color 0.3s;
+}
+
+.label sup {
+  font-size: 8px;
+  margin-left: 2px;
   color: var(--orange);
 }
 
-.item:active {
+.item[aria-current="page"] .ring {
+  background: var(--orange);
+  color: var(--black);
+  box-shadow: 0 0 0 1px var(--orange);
+}
+
+.item[aria-current="page"] .ring::before {
+  opacity: 0.8;
+  animation: ring 10s linear infinite;
+}
+
+.item[aria-current="page"] .label {
   color: var(--white);
 }
 
+.item:active .ring {
+  transform: scale(0.92);
+}
+
+@keyframes ring {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 @media (hover: hover) {
-  .item:hover {
+  .item:hover .ring {
+    box-shadow: 0 0 0 1px var(--orange);
+    transform: translateY(-3px);
+  }
+
+  .item:hover .label {
     color: var(--white);
   }
 }
 
 @media (min-width: 900px) {
   .list {
-    gap: 44px;
-  }
-
-  .item .display {
-    font-size: 56px;
+    gap: 28px;
+    padding: 24px var(--gutter);
   }
 
   .item {
-    padding: 22px 0 18px;
+    width: 96px;
+    gap: 12px;
+  }
+
+  .ring {
+    width: 88px;
+    height: 88px;
+  }
+
+  .icon {
+    font-size: 44px;
+  }
+
+  .label {
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
   }
 }
